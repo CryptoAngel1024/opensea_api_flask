@@ -1,7 +1,12 @@
-from flask import Flask
-from flask_pymongo import PyMongo
+from flask import Flask, jsonify, request
+import db
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb+srv://dev:opensea2022.@orca.8feyo.mongodb.net/test"
-mongo = PyMongo(app)
-print('hello')
+
+@app.route('/', methods=['GET'])
+def opensea_api():
+  data = db.trades.find()
+  return jsonify({'result': data})
+
+if __name__ == '__main__':
+  app.run(debug=True)
