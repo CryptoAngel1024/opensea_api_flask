@@ -1,15 +1,20 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
-import db
+from flask_pymongo import pymongo
+from flask_cors import CORS, cross_origin
+
+CONNECTION_STRING="mongodb+srv://dev:opensea2022.@orca.8feyo.mongodb.net/test"
+client = pymongo.MongoClient(CONNECTION_STRING)
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 app.url_map.strict_slashes = False # Disable redirecting on POST method from /star to /star/
 class Collection(Resource):
   def get(self):
     output = []
-    for data in db.trades.find().sort("event_time", -1).limit(50):
+    for data in client.opensea.trades.find().sort("event_time", -1).limit(50):
       output.append({
         '_id': str(data['_id']),
         'collection_slug': data['collection_slug'], 
