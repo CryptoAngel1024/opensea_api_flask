@@ -9,7 +9,7 @@ import requests
 parser = reqparse.RequestParser()
 parser.add_argument("type", type = str, help = "Type of the product", location='args')
 
-CONNECTION_STRING="mongodb+srv://simon:tiger%401024@cluster0.io9kc.mongodb.net/test"
+CONNECTION_STRING="" // mongoCluster URL
 
 client = pymongo.MongoClient(CONNECTION_STRING)
 app = Flask(__name__)
